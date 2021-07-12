@@ -17,3 +17,5 @@ struct USER_INFO
 	size_t studentAge = 0;
 	bool adminPriveleges = 0;
 };
+
+bool intCheck(int*);
