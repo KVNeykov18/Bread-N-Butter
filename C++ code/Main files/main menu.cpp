@@ -15,16 +15,20 @@ int mainMenu()
 
 int manageRegistriesMenu()
 {
+	int b;
 	cout << "Add registry (1) " << endl;
 	cout << "Delete registry (2) " << endl;
 	cout << "Search registry (3) " << endl;
 	cout << "Edit a registry (4) " << endl;
 	cout << "List all current registry (5) " << endl;
 	cout << "Exit (0) " << endl;
+	cin >> b;
+	return b;
 }
 
 int editRegistryMenu()
 {
+	int c;
 	cout << "Edit username (1) " << endl;
 	cout << "Edit password (2) " << endl;
 	cout << "Edit first Name (3) " << endl;
@@ -32,6 +36,8 @@ int editRegistryMenu()
 	cout << "Edit address (5) " << endl;
 	cout << "Edit age (6) " << endl;
 	cout << "Exit (0) " << endl;
+	cin >> c;
+	return c;
 }
 
 int menuHandler()
