@@ -1,10 +1,55 @@
-#include <iostream>
-#include <string>
-#include <vector>
 #include "global.h"
-using namespace std;
 
+//vector <USER_INFO> accounts;
+//accounts[n].name;
 int mainMenu()
 {
-	return 0;
+	int a;
+	cout << "<> Welcome to the Dormitory! <>" << endl;
+	cout << "Register a person (1) " << endl;
+	cout << "Manage registries (2) " << endl;
+	cout << "Logout (0) " << endl;
+	cin >> a;
+	return a;
+}
+
+int manageRegistriesMenu()
+{
+	cout << "Add registry (1) " << endl;
+	cout << "Delete registry (2) " << endl;
+	cout << "Search registry (3) " << endl;
+	cout << "Edit a registry (4) " << endl;
+	cout << "List all current registry (5) " << endl;
+	cout << "Exit (0) " << endl;
+}
+
+int editRegistryMenu()
+{
+	cout << "Edit username (1) " << endl;
+	cout << "Edit password (2) " << endl;
+	cout << "Edit first Name (3) " << endl;
+	cout << "Edit last Name (4) " << endl;
+	cout << "Edit address (5) " << endl;
+	cout << "Edit age (6) " << endl;
+	cout << "Exit (0) " << endl;
+}
+
+int menuHandler()
+{
+	int choice = mainMenu();
+	bool repeat = 1;
+
+	switch (choice)
+	{
+	case 1:
+		/*register a person function*/
+		break;
+	case 2:
+		manageRegistriesMenu();
+		break;
+	default:
+		break;
+	case 0:
+		/*logout();*/ repeat = 0; break;
+	}
 }
