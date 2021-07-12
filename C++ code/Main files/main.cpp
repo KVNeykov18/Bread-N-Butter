@@ -8,6 +8,5 @@ int main()
 {
 	vector <USER_INFO> accounts;
 	initAdmin(accounts);
-	login(accounts);
-	mainMenu();
+	if (login(accounts)) { mainMenu(); }
 }

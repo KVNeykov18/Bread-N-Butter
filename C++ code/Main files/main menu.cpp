@@ -58,4 +58,5 @@ int menuHandler()
 	case 0:
 		/*logout();*/ repeat = 0; break;
 	}
+	return 0;
 }
