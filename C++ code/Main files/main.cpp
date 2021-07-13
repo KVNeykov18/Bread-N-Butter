@@ -7,6 +7,7 @@
 int main()
 {
 	vector <USER_INFO> accounts;
+	USER_INFO currentUser;
 	initAdmin(accounts);
-	if (login(accounts)) { mainMenu(); }
+	if (login(accounts, currentUser)) { menuHandler(accounts, currentUser); }
 }

@@ -1,10 +1,11 @@
 #include "login.h"
 #include "global.h"
 
-bool login(vector <USER_INFO> accounts)
+bool login(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 {
 	USER_INFO user;
 	bool loggedIn = 0;
+	int index;
 	while (!loggedIn)
 	{
 		cout << "Log in (Any key) or Exit (Esc)" << endl;
@@ -16,11 +17,19 @@ bool login(vector <USER_INFO> accounts)
 		cin >> user.password;
 		for (size_t i = 0; i < accounts.size(); i++)
 		{
-			if (accounts[i].username == user.username and accounts[i].password == user.password) { loggedIn = 1; }
+			if (accounts[i].username == user.username and accounts[i].password == user.password)
+			{ 
+				loggedIn = 1; 
+				index = i;
+			}
 		}
 		system("CLS");
 		if (!loggedIn) { cout << "Wrong username or password!" << endl; }
-		else { cout << "Successfully logged in!" << endl; }
+		else
+		{ 
+			cout << "Successfully logged in!" << endl; 
+			currentUser = accounts[index];
+		}
 	}
 	return 1;
 }

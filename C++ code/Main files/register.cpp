@@ -1,10 +1,22 @@
+#include "main menu.h"
 #include "global.h"
+
+void idRefresh(vector<USER_INFO>& accounts, int id)
+{
+	for (size_t i = id - 1; i < accounts.size(); i++) { accounts[i].id--; }
+}
 
 bool ageCheck(vector<USER_INFO>& accounts)
 {
 	cout << "Enter student age: ";
 	cin >> accounts[accounts.size() - 1].studentAge;
-	if (cin.fail()) { cout << "ERROR: Not a number" << endl; return 1; }
+	if (cin.fail())
+	{ 
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "ERROR: Not a number" << endl;
+		return 1;
+	}
 	if (accounts[accounts.size() - 1].studentAge < 12) { cout << "Student is too young" << endl; return 1; }
 	if (accounts[accounts.size() - 1].studentAge > 16) { cout << "Student is too old" << endl; return 1; }
 	return 0;
@@ -28,23 +40,25 @@ void addRegistry(vector <USER_INFO>& accounts)
 	cin >> accounts[accounts.size() - 1].studentName;
 	while (repeat) { repeat = ageCheck(accounts); }
 	accounts[accounts.size() - 1].id = accounts.size();
-	accounts[accounts.size() - 1].adminPriveleges = 0;
+	accounts[accounts.size() - 1].adminPrivileges = 0;
 	system("CLS");
 	cout << "Registry successfully created" << endl;
 }
 
-void editRegistry(int choice, vector <USER_INFO>& accounts)
+void editRegistry(vector <USER_INFO>& accounts)
 {
-	size_t id;
-	size_t* ptr = &id;
+	int id = 0;
+	int* ptr = &id;
 	bool repeat = 1;
 	string input;
 	while (repeat)
 	{
 		cout << "Choose User ID (Type 0 to cancel): ";
-		repeat = intCheck((int*)ptr);
+		repeat = intCheck(ptr);
 	}
 	if (id == 0) return;
+	if (id > accounts.size()) { cout << "No registry with that ID exists" << endl; return; }
+	int choice = menuOutput(2, 7);
 	switch (choice)
 	{
 	case 1: 
@@ -93,9 +107,24 @@ void editRegistry(int choice, vector <USER_INFO>& accounts)
 	{
 		while (repeat) { repeat = ageCheck(accounts); }
 	}
-	default:
-	{
-
 	}
+}
+
+void removeRegistry(vector <USER_INFO>& accounts)
+{
+	int id = 0;
+	int* ptr = &id;
+	bool repeat = 1;
+	while (repeat)
+	{
+		cout << "Choose User ID (Type 0 to cancel): ";
+		repeat = intCheck(ptr);
+	}
+	if (id == 0) { return; }
+	if (id > accounts.size()) { cout << "No registry with that ID exists" << endl; }
+	else 
+	{ 
+		accounts.erase(accounts.begin() + id - 1);
+		idRefresh(accounts, id);
 	}
 }

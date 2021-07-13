@@ -1,62 +1,101 @@
 #include "global.h"
+#include "login.h"
+#include "register.h"
 
-//vector <USER_INFO> accounts;
-//accounts[n].name;
-int mainMenu()
+vector<vector<string>> menus
 {
-	int a;
-	cout << "<> Welcome to the Dormitory! <>" << endl;
-	cout << "Register a person (1) " << endl;
-	cout << "Manage registries (2) " << endl;
-	cout << "Logout (0) " << endl;
-	cin >> a;
-	return a;
-}
-
-int manageRegistriesMenu()
-{
-	int b;
-	cout << "Add registry (1) " << endl;
-	cout << "Delete registry (2) " << endl;
-	cout << "Search registry (3) " << endl;
-	cout << "Edit a registry (4) " << endl;
-	cout << "List all current registry (5) " << endl;
-	cout << "Exit (0) " << endl;
-	cin >> b;
-	return b;
-}
-
-int editRegistryMenu()
-{
-	int c;
-	cout << "Edit username (1) " << endl;
-	cout << "Edit password (2) " << endl;
-	cout << "Edit first Name (3) " << endl;
-	cout << "Edit last Name (4) " << endl;
-	cout << "Edit address (5) " << endl;
-	cout << "Edit age (6) " << endl;
-	cout << "Exit (0) " << endl;
-	cin >> c;
-	return c;
-}
-
-int menuHandler()
-{
-	int choice = mainMenu();
-	bool repeat = 1;
-
-	switch (choice)
 	{
-	case 1:
-		/*register a person function*/
-		break;
-	case 2:
-		manageRegistriesMenu();
-		break;
-	default:
-		break;
-	case 0:
-		/*logout();*/ repeat = 0; break;
+		{"<> Welcome to the Dormitory! <>"},
+		{"Register a student (1)"},
+		{"(ADMIN ONLY) Manage registries (2)"},
+		{"Log out (0)"}
+	},
+	{
+		{"Add registry (1)"},
+		{"Edit registry (2)"},
+		{"Remove registry (3)"},
+		{"Search for registries (4)"},
+		{"List all current registries (5)"},
+		{"Exit (0)"}
+	},
+	{
+		{"Edit username (1)"},
+		{"Edit password (2)"},
+		{"Edit first name (3)"},
+		{"Edit last name (4)"},
+		{"Edit address (5)"},
+		{"Edit age (6)"},
+		{"Exit (0)"}
+	}
+};
+
+int menuOutput(int menu, int menuSize)
+{
+	int choice;
+	int* ptr = &choice;
+	bool repeat = 1;
+	for (int i = 0; i < menuSize; i++) { cout << menus[menu][i] << endl; }
+	while (repeat) { repeat = intCheck(ptr); }
+	return choice;
+}
+
+int menuHandler(vector <USER_INFO>& accounts, USER_INFO& currentUser)
+{
+	if (currentUser.adminPrivileges == 0)
+	{
+		cout << "Some features will be unavailable because the current logged in user doesn't have admin privileges.";
+		system("PAUSE");
+		system("CLS");
+	}
+	bool repeat = 1;
+	while (repeat)
+	{
+		int choice = menuOutput(0, 4);
+
+		switch (choice)
+		{
+		case 1:
+			addRegistry(accounts); break;
+		case 2:
+			if (currentUser.adminPrivileges == 1)
+			{
+				choice = menuOutput(1, 6);
+				switch (choice)
+				{
+				case 1: addRegistry(accounts); break;
+				case 2: 
+				{
+					editRegistry(accounts);
+					break;
+				}
+				case 3: removeRegistry(accounts); break;
+				case 4: break;
+				case 5: break;
+				default:
+				{
+					system("CLS");
+					cout << "Notice: Not an option";
+					system("PAUSE"); system("CLS");
+					break;
+				}
+				case 0: break;
+				}
+			}
+			else
+			{ 
+				system("CLS");
+				cout << "Notice: User is not an admin"; 
+				system("PAUSE");system("CLS");
+			}
+			break;
+		default:
+			system("CLS");
+			cout << "Notice: Not an option";
+			system("PAUSE"); system("CLS");
+			break;
+		case 0:
+			login(accounts, currentUser); repeat = 0; break;
+		}
 	}
 	return 0;
 }
