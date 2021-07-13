@@ -15,7 +15,7 @@ struct USER_INFO
 	string address = "";
 	string studentName = "";
 	size_t studentAge = 0;
-	bool adminPriveleges = 0;
+	bool adminPrivileges = 0;
 };
 
 bool intCheck(int*);
