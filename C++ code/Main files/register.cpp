@@ -22,20 +22,29 @@ bool ageCheck(vector<USER_INFO>& accounts)
 	return 0;
 }
 
-void addRegistry(vector <USER_INFO>& accounts)
+void addRegistry(vector <USER_INFO>& accounts, USER_INFO& currentUser, int adminRegistry)
 {
 	bool repeat = 1;
 	accounts.push_back(USER_INFO());
-	cout << "Create username: ";
-	cin >> accounts[accounts.size() - 1].username;
-	cout << "Create password: ";
-	cin >> accounts[accounts.size() - 1].password;
+	if (adminRegistry == 1)
+	{
+		cout << "Create username: ";
+		cin >> accounts[accounts.size() - 1].username;
+		cout << "Create password: ";
+		cin >> accounts[accounts.size() - 1].password;
+		cout << "Enter address: ";
+		cin >> accounts[accounts.size() - 1].address;
+	}
+	else
+	{
+		accounts[accounts.size() - 1].username = currentUser.username;
+		accounts[accounts.size() - 1].password = currentUser.password;
+		accounts[accounts.size() - 1].address = currentUser.address;
+	}
 	cout << "Enter first name: ";
 	cin >> accounts[accounts.size() - 1].first_name;
 	cout << "Enter last name: ";
 	cin >> accounts[accounts.size() - 1].last_name;
-	cout << "Enter address: ";
-	cin >> accounts[accounts.size() - 1].address;
 	cout << "Enter student name: ";
 	cin >> accounts[accounts.size() - 1].studentName;
 	while (repeat) { repeat = ageCheck(accounts); }
@@ -43,6 +52,14 @@ void addRegistry(vector <USER_INFO>& accounts)
 	accounts[accounts.size() - 1].adminPrivileges = 0;
 	system("CLS");
 	cout << "Registry successfully created" << endl;
+	system("PAUSE"); system("CLS");
+}
+
+void editMessage()
+{
+	system("CLS");
+	cout << "Successfully edited registry" << endl;
+	system("PAUSE"); system("CLS");
 }
 
 void editRegistry(vector <USER_INFO>& accounts)
@@ -57,55 +74,75 @@ void editRegistry(vector <USER_INFO>& accounts)
 		repeat = intCheck(ptr);
 	}
 	if (id == 0) return;
-	if (id > accounts.size()) { cout << "No registry with that ID exists" << endl; return; }
-	int choice = menuOutput(2, 7);
+	if (id > accounts.size()) 
+	{
+		system("CLS");
+		cout << "No registry with that ID exists" << endl;
+		system("PAUSE"); system("CLS");
+		return; 
+	}
+	int choice = menuOutput(2, 8);
+	repeat = 1;
+	system("CLS");
 	switch (choice)
 	{
 	case 1: 
 	{
 		cout << "Edit username (Type 0 to cancel): ";
 		cin >> input;
-		if (input != "0") { accounts[id - 1].username = input; }
+		if (input != "0") { accounts[id - 1].username = input; editMessage(); }
 		break;
 	}
 	case 2:
 	{
 		cout << "Edit password (Type 0 to cancel): ";
 		cin >> input;
-		if (input != "0") { accounts[id - 1].password = input; }
+		if (input != "0") { accounts[id - 1].password = input; editMessage(); }
 		break;
 	}
 	case 3:
 	{
 		cout << "Edit first name (Type 0 to cancel): ";
 		cin >> input;
-		if (input != "0") { accounts[id - 1].first_name = input; }
+		if (input != "0") { accounts[id - 1].first_name = input; editMessage(); }
 		break;
 	}
 	case 4:
 	{
 		cout << "Edit last name (Type 0 to cancel): ";
 		cin >> input;
-		if (input != "0") { accounts[id - 1].last_name = input; }
+		if (input != "0") { accounts[id - 1].last_name = input; editMessage(); }
 		break;
 	}
 	case 5:
 	{
 		cout << "Edit address (Type 0 to cancel): ";
 		cin >> input;
-		if (input != "0") { accounts[id - 1].address = input; }
+		if (input != "0") { accounts[id - 1].address = input; editMessage(); }
 		break;
 	}
 	case 6:
 	{
 		cout << "Edit student name (Type 0 to cancel): ";
 		cin >> input;
-		if (input != "0") { accounts[id - 1].studentName = input; }
+		if (input != "0") { accounts[id - 1].studentName = input; editMessage(); }
 		break;
 	}
 	case 7:
 	{
 		while (repeat) { repeat = ageCheck(accounts); }
+		break;
+	}
+	default:
+	{
+		system("CLS");
+		cout << "Notice: Not an option";
+		system("PAUSE"); system("CLS");
+		break;
+	}
+	case 0:
+	{
+		system("CLS"); break;
 	}
 	}
 }
@@ -121,10 +158,39 @@ void removeRegistry(vector <USER_INFO>& accounts)
 		repeat = intCheck(ptr);
 	}
 	if (id == 0) { return; }
-	if (id > accounts.size()) { cout << "No registry with that ID exists" << endl; }
+	if (id > accounts.size())
+	{
+		system("CLS");
+		cout << "No registry with that ID exists" << endl;
+		system("PAUSE"); system("CLS");
+		return;
+	}
 	else 
 	{ 
 		accounts.erase(accounts.begin() + id - 1);
 		idRefresh(accounts, id);
+		system("CLS");
+		cout << "Successfully deleted registry" << endl;
+		system("PAUSE"); system("CLS");
 	}
+}
+
+void listAllCurrentRegistries(vector<USER_INFO>& accounts)
+{
+	system("CLS");
+	cout << "ID, Username, Password, First name, Last name, Address, Student name, Student age" << endl;
+	for (size_t i = 0; i < accounts.size(); i++)
+	{
+		cout << accounts[i].id << " ";
+		cout << accounts[i].username << " ";
+		cout << accounts[i].password << " ";
+		cout << accounts[i].first_name << " ";
+		cout << accounts[i].last_name << " ";
+		cout << accounts[i].address << " ";
+		cout << accounts[i].studentName << " ";
+		cout << accounts[i].studentAge << " ";
+		cout << "[ is admin:" << accounts[i].adminPrivileges << " ]";
+		cout << endl;
+	}
+	cout << endl;
 }

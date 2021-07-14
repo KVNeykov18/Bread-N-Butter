@@ -14,8 +14,7 @@ vector<vector<string>> menus
 		{"Add registry (1)"},
 		{"Edit registry (2)"},
 		{"Remove registry (3)"},
-		{"Search for registries (4)"},
-		{"List all current registries (5)"},
+		{"List all current registries (4)"},
 		{"Exit (0)"}
 	},
 	{
@@ -24,7 +23,8 @@ vector<vector<string>> menus
 		{"Edit first name (3)"},
 		{"Edit last name (4)"},
 		{"Edit address (5)"},
-		{"Edit age (6)"},
+		{"Edit student name (6)"},
+		{"Edit student age (7)"},
 		{"Exit (0)"}
 	}
 };
@@ -41,40 +41,30 @@ int menuOutput(int menu, int menuSize)
 
 int menuHandler(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 {
-	if (currentUser.adminPrivileges == 0)
-	{
-		cout << "Some features will be unavailable because the current logged in user doesn't have admin privileges.";
-		system("PAUSE");
-		system("CLS");
-	}
 	bool repeat = 1;
 	while (repeat)
 	{
 		int choice = menuOutput(0, 4);
-
+		system("CLS");
 		switch (choice)
 		{
 		case 1:
-			addRegistry(accounts); break;
+			addRegistry(accounts, currentUser, 0); break;
 		case 2:
 			if (currentUser.adminPrivileges == 1)
 			{
-				choice = menuOutput(1, 6);
+				choice = menuOutput(1, 5);
+				system("CLS");
 				switch (choice)
 				{
-				case 1: addRegistry(accounts); break;
-				case 2: 
-				{
-					editRegistry(accounts);
-					break;
-				}
+				case 1: addRegistry(accounts, currentUser, 1); break;
+				case 2: editRegistry(accounts); break;
 				case 3: removeRegistry(accounts); break;
-				case 4: break;
-				case 5: break;
+				case 4: listAllCurrentRegistries(accounts); break;
 				default:
 				{
 					system("CLS");
-					cout << "Notice: Not an option";
+					cout << "Notice: Not an option" << endl;
 					system("PAUSE"); system("CLS");
 					break;
 				}
@@ -84,17 +74,17 @@ int menuHandler(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 			else
 			{ 
 				system("CLS");
-				cout << "Notice: User is not an admin"; 
+				cout << "Notice: User is not an admin" << endl; 
 				system("PAUSE");system("CLS");
 			}
 			break;
 		default:
 			system("CLS");
-			cout << "Notice: Not an option";
+			cout << "Notice: Not an option" << endl;
 			system("PAUSE"); system("CLS");
 			break;
 		case 0:
-			login(accounts, currentUser); repeat = 0; break;
+			repeat = login(accounts, currentUser); break;
 		}
 	}
 	return 0;
