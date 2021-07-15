@@ -1,6 +1,7 @@
 #include "login.h"
 #include "global.h"
 
+//a function for logging in
 bool login(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 {
 	USER_INFO user;

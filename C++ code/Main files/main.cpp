@@ -4,6 +4,7 @@
 #include "main menu.h"
 #include "global.h"
 
+//almost nothing happens here
 int main()
 {
 	vector <USER_INFO> accounts;

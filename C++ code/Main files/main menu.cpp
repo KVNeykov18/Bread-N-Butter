@@ -2,6 +2,7 @@
 #include "login.h"
 #include "register.h"
 
+//all menus are stored here
 vector<vector<string>> menus
 {
 	{
@@ -29,22 +30,24 @@ vector<vector<string>> menus
 	}
 };
 
-int menuOutput(int menu, int menuSize)
+//function for displaying the menus
+int menuDisplay(int menu, int menuSize)
 {
 	int choice;
 	int* ptr = &choice;
 	bool repeat = 1;
-	for (int i = 0; i < menuSize; i++) { cout << menus[menu][i] << endl; }
+	for (int i = 0; i < menuSize; i++) { cout << menus[menu][i] << endl; } //int menu is used for which menu and int menuSize is the size of the menu
 	while (repeat) { repeat = intCheck(ptr); }
 	return choice;
 }
 
+//handles the menus (which menu to show up, makes sure options do what they're supposed to do, etc)
 int menuHandler(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 {
 	bool repeat = 1;
 	while (repeat)
 	{
-		int choice = menuOutput(0, 4);
+		int choice = menuDisplay(0, 4);
 		system("CLS");
 		switch (choice)
 		{
@@ -53,7 +56,7 @@ int menuHandler(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 		case 2:
 			if (currentUser.adminPrivileges == 1)
 			{
-				choice = menuOutput(1, 5);
+				choice = menuDisplay(1, 5);
 				system("CLS");
 				switch (choice)
 				{
@@ -84,7 +87,7 @@ int menuHandler(vector <USER_INFO>& accounts, USER_INFO& currentUser)
 			system("PAUSE"); system("CLS");
 			break;
 		case 0:
-			repeat = login(accounts, currentUser); break;
+			repeat = login(accounts, currentUser); break; //takes you back to the login screen
 		}
 	}
 	return 0;

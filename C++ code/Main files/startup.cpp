@@ -1,6 +1,6 @@
 #include "global.h"
-#include <fstream>
 
+//initializes Admin account
 void initAdmin(vector <USER_INFO>& accounts)
 {
 	accounts.push_back(USER_INFO());

@@ -1,11 +1,13 @@
 #include "main menu.h"
 #include "global.h"
 
+//fixes up the IDs after removing a registry
 void idRefresh(vector<USER_INFO>& accounts, int id)
 {
-	for (size_t i = id - 1; i < accounts.size(); i++) { accounts[i].id--; }
+	for (size_t i = id - 1; i < accounts.size(); i++) { accounts[i].id--; } //changes ID for all regstries after the deleted one
 }
 
+//checks if the age is valid
 bool ageCheck(vector<USER_INFO>& accounts)
 {
 	cout << "Enter student age: ";
@@ -22,11 +24,12 @@ bool ageCheck(vector<USER_INFO>& accounts)
 	return 0;
 }
 
+//adds a registry
 void addRegistry(vector <USER_INFO>& accounts, USER_INFO& currentUser, int adminRegistry)
 {
 	bool repeat = 1;
 	accounts.push_back(USER_INFO());
-	if (adminRegistry == 1)
+	if (adminRegistry == 1) //this function is used in two situations (by a regular user and by an admin user), some info is automatically entered for regular users
 	{
 		cout << "Create username: ";
 		cin >> accounts[accounts.size() - 1].username;
@@ -55,6 +58,7 @@ void addRegistry(vector <USER_INFO>& accounts, USER_INFO& currentUser, int admin
 	system("PAUSE"); system("CLS");
 }
 
+//message for when you edit a registry
 void editMessage()
 {
 	system("CLS");
@@ -62,6 +66,7 @@ void editMessage()
 	system("PAUSE"); system("CLS");
 }
 
+//edit a registry
 void editRegistry(vector <USER_INFO>& accounts)
 {
 	int id = 0;
@@ -74,14 +79,14 @@ void editRegistry(vector <USER_INFO>& accounts)
 		repeat = intCheck(ptr);
 	}
 	if (id == 0) return;
-	if (id > accounts.size()) 
+	if ((size_t)id > accounts.size()) 
 	{
 		system("CLS");
 		cout << "No registry with that ID exists" << endl;
 		system("PAUSE"); system("CLS");
 		return; 
 	}
-	int choice = menuOutput(2, 8);
+	int choice = menuDisplay(2, 8);
 	repeat = 1;
 	system("CLS");
 	switch (choice)
@@ -147,6 +152,7 @@ void editRegistry(vector <USER_INFO>& accounts)
 	}
 }
 
+//remove a registry
 void removeRegistry(vector <USER_INFO>& accounts)
 {
 	int id = 0;
@@ -158,7 +164,7 @@ void removeRegistry(vector <USER_INFO>& accounts)
 		repeat = intCheck(ptr);
 	}
 	if (id == 0) { return; }
-	if (id > accounts.size())
+	if ((size_t)id > accounts.size())
 	{
 		system("CLS");
 		cout << "No registry with that ID exists" << endl;
@@ -175,6 +181,7 @@ void removeRegistry(vector <USER_INFO>& accounts)
 	}
 }
 
+//outputs a list with all of the registries
 void listAllCurrentRegistries(vector<USER_INFO>& accounts)
 {
 	system("CLS");
