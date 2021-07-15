@@ -1,3 +1,4 @@
+
 #pragma once
 #include <iostream>
 #include <string>
@@ -19,3 +20,5 @@ struct USER_INFO
 };
 
 bool intCheck(int*);
+
+//this entire header file is for everything that is used throughout the whole program
